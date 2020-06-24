@@ -1,0 +1,21 @@
+{
+  "name": "electron-react-app",
+  "version": "1.0.0",
+  "description": "Cross platform desktop app built using Electron and React.",
+  "main": "main.js",
+  "repository": "https://github.com/skb1129/electron-react-app",
+  "author": "Surya Kant Bansal <suryakantbansal97@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^9.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "electron-builder": "^22.7.0"
+  }
+}
