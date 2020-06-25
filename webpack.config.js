@@ -2,17 +2,32 @@ const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-const MODE = {
-  DEV: "development",
-  PROD: "production",
-};
-
-module.exports = ({ mode } = { mode: MODE.DEV }) => ({
-  mode,
+module.exports = (env = { development: false }) => ({
+  mode: env.development ? "development" : "production",
+  devServer: {
+    host: "0.0.0.0",
+    port: "3000",
+    proxy: {
+      "**": {
+        bypass(req) {
+          if (req.headers.accept.includes("html")) {
+            return "/index.html";
+          }
+        },
+      },
+    },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+    hot: true,
+    overlay: true,
+    historyApiFallback: true,
+  },
   resolve: { extensions: [".js", ".jsx", ".ts", ".tsx", ".css", ".scss"] },
   entry: {
     renderer: "./index.tsx",
   },
+  target: env.development ? "electron-renderer" : "electron-preload",
   module: {
     rules: [
       {
@@ -25,7 +40,6 @@ module.exports = ({ mode } = { mode: MODE.DEV }) => ({
   output: {
     path: path.join(__dirname, "./build/"),
     filename: "[name].js",
-    publicPath: "./",
   },
   plugins: [
     new CleanWebpackPlugin(),

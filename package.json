@@ -8,9 +8,12 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "webpack --env.mode production",
+    "build": "webpack",
+    "start:renderer": "webpack-dev-server --env.development",
+    "start:main": "NODE_ENV=development electron .",
     "prestart": "yarn build",
-    "start": "electron ."
+    "start": "NODE_ENV=production electron .",
+    "package:mac": "yarn build && electron-builder build --mac"
   },
   "build": {
     "productName": "ElectronReact",
