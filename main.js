@@ -1,4 +1,9 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
+
+ipcMain.handle("communication", (event, ...args) => {
+  console.log("Arguments:", args);
+  return Promise.resolve();
+});
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
