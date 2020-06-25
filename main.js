@@ -1,4 +1,7 @@
+const path = require("path");
 const { app, BrowserWindow, ipcMain } = require("electron");
+
+const isDev = process.env.NODE_ENV === "development";
 
 ipcMain.handle("communication", (event, ...args) => {
   console.log("Arguments:", args);
@@ -12,19 +15,20 @@ function createWindow() {
     width: 1024,
     height: 768,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: isDev,
+      contextIsolation: !isDev,
+      preload: isDev ? null : path.join(__dirname, "build/renderer.js"),
     },
   });
 
-  const APP_URL =
-    process.env.NODE_ENV === "development" ? "http://localhost:3000" : `file://${__dirname}/build/index.html`;
+  const APP_URL = isDev ? "http://localhost:3000" : `file://${__dirname}/build/index.html`;
   mainWindow.loadURL(APP_URL);
 
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
   });
 
-  process.env.NODE_ENV === "development" && mainWindow.webContents.openDevTools();
+  isDev && mainWindow.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow);
