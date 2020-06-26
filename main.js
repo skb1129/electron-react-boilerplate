@@ -17,6 +17,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: isDev,
       contextIsolation: !isDev,
+      enableRemoteModule: false,
       preload: isDev ? null : path.join(__dirname, "build/renderer.js"),
     },
   });
@@ -39,4 +40,13 @@ app.on("activate", function () {
 
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") app.quit();
+});
+
+app.on("web-contents-created", (event, contents) => {
+  contents.on("will-navigate", (event, navigationUrl) => {
+    event.preventDefault();
+  });
+  contents.on("new-window", async (event, navigationUrl) => {
+    event.preventDefault();
+  });
 });

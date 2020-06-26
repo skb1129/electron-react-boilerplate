@@ -2,8 +2,8 @@ const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-module.exports = (env = { development: false }) => ({
-  mode: env.development ? "development" : "production",
+module.exports = ({ development } = { development: false }) => ({
+  mode: development ? "development" : "production",
   devServer: {
     host: "0.0.0.0",
     port: "3000",
@@ -27,13 +27,13 @@ module.exports = (env = { development: false }) => ({
   entry: {
     renderer: "./index.tsx",
   },
-  target: env.development ? "electron-renderer" : "electron-preload",
+  target: development ? "electron-renderer" : "electron-preload",
   module: {
     rules: [
       {
         loader: "babel-loader",
         exclude: /node_modules/,
-        test: /\.(tsx|ts)?$/,
+        test: /\.(tsx|ts|jsx|js)?$/,
       },
     ],
   },
@@ -44,9 +44,20 @@ module.exports = (env = { development: false }) => ({
   plugins: [
     new CleanWebpackPlugin(),
     new HTMLWebpackPlugin({
+      title: "ElectronReact",
       filename: "index.html",
       template: "public/index.html",
-      chunks: ["renderer"],
+      chunks: development ? ["renderer"] : [],
+      meta: {
+        "Content-Security-Policy": {
+          "http-equiv": "Content-Security-Policy",
+          content: `default-src ${
+            development ? "'self' 'unsafe-eval'" : "'none'"
+          }; img-src https://*; child-src 'none';`,
+        },
+      },
+      xhtml: true,
+      inject: false,
     }),
   ],
 });
