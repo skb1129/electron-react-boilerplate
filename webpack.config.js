@@ -1,6 +1,7 @@
 const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = ({ development } = { development: false }) => ({
   mode: development ? "development" : "production",
@@ -59,5 +60,6 @@ module.exports = ({ development } = { development: false }) => ({
       xhtml: true,
       inject: false,
     }),
+    new CopyPlugin({ patterns: [{ from: "*.png", context: "public" }] }),
   ],
 });
