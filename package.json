@@ -13,15 +13,10 @@
     "start:main": "NODE_ENV=development electron .",
     "prestart": "yarn build",
     "start": "NODE_ENV=production electron .",
-    "package:mac": "yarn build && electron-builder build --mac"
-  },
-  "build": {
-    "productName": "ElectronReact",
-    "appId": "com.electron.ElectronReact",
-    "files": [
-      "build/",
-      "main.js"
-    ]
+    "package:macos": "yarn build && electron-builder build --macos",
+    "package:windows": "yarn build && electron-builder build --windows",
+    "package:linux": "yarn build && electron-builder build --linux",
+    "package": "yarn build && electron-builder build --mwl"
   },
   "dependencies": {
     "react": "^16.13.1",

@@ -1,0 +1,5 @@
+productName: "ElectronReact"
+appId: "com.electron.ElectronReact"
+files:
+  - "build/"
+  - "main.js"
