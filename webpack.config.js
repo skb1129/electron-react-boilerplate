@@ -1,4 +1,5 @@
 const path = require("path");
+const { EnvironmentPlugin } = require("webpack");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
@@ -72,5 +73,6 @@ module.exports = ({ development } = { development: false }) => ({
     }),
     new MiniCssExtractPlugin({ filename: "[name].css" }),
     new CopyPlugin({ patterns: [{ from: "*.png", context: "public" }] }),
+    new EnvironmentPlugin({ HMR: development }),
   ],
 });
