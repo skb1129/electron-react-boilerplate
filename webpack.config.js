@@ -2,6 +2,7 @@ const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = ({ development } = { development: false }) => ({
   mode: development ? "development" : "production",
@@ -36,6 +37,15 @@ module.exports = ({ development } = { development: false }) => ({
         exclude: /node_modules/,
         test: /\.(tsx|ts|jsx|js)?$/,
       },
+      {
+        test: /\.(scss|css)?$/,
+        use: [
+          "style-loader",
+          { loader: MiniCssExtractPlugin.loader, options: { hmr: development } },
+          "css-loader",
+          "sass-loader",
+        ],
+      },
     ],
   },
   output: {
@@ -53,13 +63,14 @@ module.exports = ({ development } = { development: false }) => ({
         "Content-Security-Policy": {
           "http-equiv": "Content-Security-Policy",
           content: `default-src ${
-            development ? "'self' 'unsafe-eval'" : "'none'"
+            development ? "'self' 'unsafe-eval'" : "'self'"
           }; img-src https://*; child-src 'none';`,
         },
       },
       xhtml: true,
       inject: false,
     }),
+    new MiniCssExtractPlugin({ filename: "[name].css" }),
     new CopyPlugin({ patterns: [{ from: "*.png", context: "public" }] }),
   ],
 });

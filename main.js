@@ -1,9 +1,11 @@
 const path = require("path");
 const { app, BrowserWindow, ipcMain } = require("electron");
 
+const { CHANNELS } = require("./common");
+
 const isDev = process.env.NODE_ENV === "development";
 
-ipcMain.handle("communication", (event, ...args) => {
+ipcMain.handle(CHANNELS.COMMUNICATION, (event, ...args) => {
   console.log("Arguments:", args);
   return Promise.resolve();
 });
@@ -11,7 +13,7 @@ ipcMain.handle("communication", (event, ...args) => {
 function createWindow() {
   const mainWindow = new BrowserWindow({
     show: false,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#000000",
     width: 1024,
     height: 768,
     webPreferences: {

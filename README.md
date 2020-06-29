@@ -35,8 +35,12 @@ yarn start
 ### Bundling
 Run the following command to package the application.
 ```shell script
-electron-builder build
+yarn package:macos     # MacOS
+yarn package:windows   # Windows
+yarn package:linux     # Linux
+yarn package           # All platforms
 ```
+The build executables will be available in the `dist/` directory. 
 
 ## Build With
 * [React](https://reactjs.org/) - The frontend library used

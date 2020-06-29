@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from "react";
 import { ipcRenderer } from "electron";
 
+import { CHANNELS } from "../common";
+
 function App() {
   const [value, setValue] = useState("");
 
   const sendMessage = useCallback(() => {
-    ipcRenderer.invoke("communication", value).then(() => setValue(""));
+    ipcRenderer.invoke(CHANNELS.COMMUNICATION, value).then(() => setValue(""));
   }, [value, setValue]);
 
   return (
