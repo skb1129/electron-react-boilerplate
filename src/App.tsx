@@ -5,7 +5,7 @@ import { CHANNELS } from "../common";
 
 import classes from "./App.scss";
 
-function App() {
+function App(): JSX.Element {
   const [value, setValue] = useState("");
 
   const sendMessage = useCallback(() => {

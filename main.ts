@@ -50,9 +50,11 @@ app.on("window-all-closed", function () {
 
 app.on("web-contents-created", (event, contents) => {
   contents.on("will-navigate", (event, navigationUrl) => {
+    console.log(navigationUrl);
     event.preventDefault();
   });
   contents.on("new-window", async (event, navigationUrl) => {
+    console.log(navigationUrl);
     event.preventDefault();
   });
 });
