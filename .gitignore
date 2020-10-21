@@ -35,4 +35,8 @@ release
 dist
 build
 
+# IntelliJ
 .idea
+
+# Environment
+.env*

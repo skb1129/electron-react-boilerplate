@@ -3,6 +3,8 @@ import { ipcRenderer } from "electron";
 
 import { CHANNELS } from "../common";
 
+import classes from "./App.scss";
+
 function App() {
   const [value, setValue] = useState("");
 
@@ -11,7 +13,7 @@ function App() {
   }, [value, setValue]);
 
   return (
-    <div>
+    <div className={classes.wrapper}>
       <h1>Hello Electron!!!</h1>
       <p>We are using:</p>
       <ul>

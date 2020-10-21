@@ -1,7 +1,11 @@
-const path = require("path");
-const { app, BrowserWindow, ipcMain } = require("electron");
+// Initially parse and load environment file
+import dotenv from "dotenv";
+dotenv.config();
 
-const { CHANNELS } = require("./common");
+import path from "path";
+import { app, BrowserWindow, ipcMain } from "electron";
+
+import { CHANNELS } from "./common";
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -20,11 +24,11 @@ function createWindow() {
       nodeIntegration: isDev,
       contextIsolation: !isDev,
       enableRemoteModule: false,
-      preload: isDev ? null : path.join(__dirname, "build/renderer.js"),
+      preload: isDev ? undefined : path.join(__dirname, "renderer.js"),
     },
   });
 
-  const APP_URL = isDev ? "http://localhost:3000" : `file://${__dirname}/build/index.html`;
+  const APP_URL = isDev ? "http://localhost:3000" : `file://${__dirname}/index.html`;
   mainWindow.loadURL(APP_URL);
 
   mainWindow.on("ready-to-show", () => {

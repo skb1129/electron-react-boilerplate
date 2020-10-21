@@ -41,9 +41,17 @@ module.exports = ({ development } = { development: false }) => ({
       {
         test: /\.(scss|css)?$/,
         use: [
-          "style-loader",
-          { loader: MiniCssExtractPlugin.loader, options: { hmr: development } },
-          "css-loader",
+          development ? "style-loader" : MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: {
+                localIdentName: "[name]__[local]__[contenthash:base64:5]",
+                exportLocalsConvention: "camelCaseOnly",
+              },
+            },
+          },
           "sass-loader",
         ],
       },
@@ -64,7 +72,7 @@ module.exports = ({ development } = { development: false }) => ({
         "Content-Security-Policy": {
           "http-equiv": "Content-Security-Policy",
           content: `default-src ${
-            development ? "'self' 'unsafe-eval'" : "'self'"
+            development ? "'self' 'unsafe-eval' 'unsafe-inline'" : "'self'"
           }; img-src https://*; child-src 'none';`,
         },
       },
