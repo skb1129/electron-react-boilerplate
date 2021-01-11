@@ -5,14 +5,12 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <%= htmlWebpackPlugin.tags.headTags %>
-    <!--TODO: Use html-webpack-exclude-assets-plugin-->
-    <link href="renderer.css" rel="stylesheet" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https://*; child-src 'none';" />
+    <link href="styles.css" rel="stylesheet" />
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
 
   <body>
     <div id="root"></div>
-    <%= htmlWebpackPlugin.tags.bodyTags %>
   </body>
 </html>
